@@ -1,0 +1,206 @@
+SET check_function_bodies = false
+;
+
+CREATE TABLE "ANNUAL REWARD"(
+  "rewardName" cstring NOT NULL,
+  winner_ssn integer NOT NULL,
+  dnumber integer NOT NULL,
+  pnumber integer NOT NULL,
+  CONSTRAINT "ANNUAL REWARD_pkey" PRIMARY KEY("rewardName")
+);
+
+CREATE TABLE "DEPARTMENT"(
+  dnumber integer NOT NULL,
+  dname cstring NOT NULL,
+  dwebsite cstring NOT NULL,
+  funding money NOT NULL,
+  mgr_ssn integer NOT NULL,
+  CONSTRAINT "DEPARTMENT_pkey" PRIMARY KEY(dnumber)
+);
+
+CREATE TABLE "DEPARTMENT_LOCATION"(
+dlocation cstring NOT NULL, dnumber integer NOT NULL,
+  CONSTRAINT "DEPARTMENT_LOCATION_pkey" PRIMARY KEY(dnumber, dlocation)
+);
+
+CREATE TABLE "DEPENDENT"(
+  dependent_name cstring NOT NULL,
+  "dependent_SSN" integer,
+  sex char NOT NULL,
+  bdate date,
+  relationship cstring,
+  essn integer NOT NULL,
+  CONSTRAINT "DEPENDENT_pkey" PRIMARY KEY(dependent_name, "dependent_SSN")
+);
+
+CREATE TABLE "EMPLOYEE"(
+  ssn integer NOT NULL,
+  fname cstring NOT NULL,
+  minit integer,
+  lname cstring NOT NULL,
+  address cstring NOT NULL,
+  bdate date,
+  salary float4 NOT NULL,
+  sex char,
+  dno integer NOT NULL,
+  superssn integer NOT NULL,
+  CONSTRAINT "EMPLOYEE_pkey" PRIMARY KEY(ssn)
+);
+
+CREATE TABLE "EMPLOYEE_PROJECT"(
+  project_id integer NOT NULL,
+  hours integer NOT NULL,
+  ssn integer NOT NULL,
+  pnumber integer NOT NULL,
+  CONSTRAINT "EMPLOYEE_PROJECT_pkey" PRIMARY KEY(project_id)
+);
+
+CREATE TABLE "FINANCE"(
+  finance_id money NOT NULL,
+  "profit " money NOT NULL,
+  loss money NOT NULL,
+  "EMPLOYEE_ssn" integer NOT NULL,
+  "PROJECT_pnumber" integer NOT NULL,
+  "PATIENT_patient_id" integer NOT NULL,
+  "MEMBERSHIP_membership_id" integer NOT NULL,
+  CONSTRAINT "FINANCE_pkey" PRIMARY KEY(finance_id)
+);
+
+CREATE TABLE "LOCATION"
+  ("location" cstring NOT NULL, CONSTRAINT "LOCATION_pkey" PRIMARY KEY("location"))
+  ;
+
+CREATE TABLE "MEMBERSHIP"(
+  membership_id integer NOT NULL,
+  period daterange NOT NULL,
+  "PATIENT_patient_id" integer NOT NULL,
+  CONSTRAINT "MEMBERSHIP_pkey" PRIMARY KEY(membership_id)
+);
+
+CREATE TABLE "PATIENT"(
+  patient_id integer NOT NULL,
+  "blood type" cstring NOT NULL,
+  address cstring NOT NULL,
+  patient_name cstring NOT NULL,
+  sex char NOT NULL,
+  membership boolean NOT NULL,
+  "period of stay" daterange NOT NULL,
+  project_number integer NOT NULL,
+  dept_category integer NOT NULL,
+  ward_location cstring NOT NULL,
+  guardian_name cstring NOT NULL,
+  "EMPLOYEE_ssn" integer NOT NULL,
+  guariden_id integer,
+  CONSTRAINT "PATIENT_pkey" PRIMARY KEY(patient_id)
+);
+
+CREATE TABLE "PROJECT"(
+  pnumber integer NOT NULL,
+  pname cstring NOT NULL,
+  plocation cstring NOT NULL,
+  dwebpage cstring,
+  expense money NOT NULL,
+  dnum integer NOT NULL,
+  CONSTRAINT "PROJECT_pkey" PRIMARY KEY(pnumber)
+);
+
+CREATE TABLE "PROJECT LOCATION"
+  (plocation cstring NOT NULL, pnumber integer NOT NULL);
+
+ALTER TABLE "EMPLOYEE"
+  ADD CONSTRAINT "EMPLOYEE_dno_fkey"
+    FOREIGN KEY (dno) REFERENCES "DEPARTMENT" (dnumber);
+
+ALTER TABLE "DEPARTMENT_LOCATION"
+  ADD CONSTRAINT "DEPARTMENT_LOCATION_dnumber_fkey"
+    FOREIGN KEY (dnumber) REFERENCES "DEPARTMENT" (dnumber);
+
+ALTER TABLE "DEPARTMENT_LOCATION"
+  ADD CONSTRAINT "DEPARTMENT_LOCATION_dlocation_fkey"
+    FOREIGN KEY (dlocation) REFERENCES "LOCATION" ("location");
+
+ALTER TABLE "DEPARTMENT"
+  ADD CONSTRAINT "DEPARTMENT_mgr_ssn_fkey"
+    FOREIGN KEY (mgr_ssn) REFERENCES "EMPLOYEE" (ssn);
+
+ALTER TABLE "PROJECT"
+  ADD CONSTRAINT "PROJECT_dnum_fkey"
+    FOREIGN KEY (dnum) REFERENCES "DEPARTMENT" (dnumber);
+
+ALTER TABLE "EMPLOYEE_PROJECT"
+  ADD CONSTRAINT "EMPLOYEE_PROJECT_ssn_fkey"
+    FOREIGN KEY (ssn) REFERENCES "EMPLOYEE" (ssn);
+
+ALTER TABLE "EMPLOYEE_PROJECT"
+  ADD CONSTRAINT "EMPLOYEE_PROJECT_pnumber_fkey"
+    FOREIGN KEY (pnumber) REFERENCES "PROJECT" (pnumber);
+
+ALTER TABLE "DEPENDENT"
+  ADD CONSTRAINT "DEPENDENT_essn_fkey"
+    FOREIGN KEY (essn) REFERENCES "EMPLOYEE" (ssn);
+
+ALTER TABLE "EMPLOYEE"
+  ADD CONSTRAINT "EMPLOYEE_fkey"
+    FOREIGN KEY (superssn) REFERENCES "EMPLOYEE" (ssn);
+
+ALTER TABLE "ANNUAL REWARD"
+  ADD CONSTRAINT "ANNUAL REWARD_winner_ssn_fkey"
+    FOREIGN KEY (winner_ssn) REFERENCES "EMPLOYEE" (ssn);
+
+ALTER TABLE "ANNUAL REWARD"
+  ADD CONSTRAINT "ANNUAL REWARD_dnumber_fkey"
+    FOREIGN KEY (dnumber) REFERENCES "DEPARTMENT" (dnumber);
+
+ALTER TABLE "ANNUAL REWARD"
+  ADD CONSTRAINT "ANNUAL REWARD_pnumber_fkey"
+    FOREIGN KEY (pnumber) REFERENCES "PROJECT" (pnumber);
+
+ALTER TABLE "PROJECT LOCATION"
+  ADD CONSTRAINT "PROJECT LOCATION_plocation_fkey"
+    FOREIGN KEY (plocation) REFERENCES "LOCATION" ("location");
+
+ALTER TABLE "PROJECT LOCATION"
+  ADD CONSTRAINT "PROJECT LOCATION_pnumber_fkey"
+    FOREIGN KEY (pnumber) REFERENCES "PROJECT" (pnumber);
+
+ALTER TABLE "PATIENT"
+  ADD CONSTRAINT "PATIENT_dept_category_fkey"
+    FOREIGN KEY (dept_category) REFERENCES "DEPARTMENT" (dnumber);
+
+ALTER TABLE "PATIENT"
+  ADD CONSTRAINT "PATIENT_ward_location_fkey"
+    FOREIGN KEY (ward_location) REFERENCES "LOCATION" ("location");
+
+ALTER TABLE "PATIENT"
+  ADD CONSTRAINT "PATIENT_guardian_name_guariden_id_fkey"
+    FOREIGN KEY (guardian_name, guariden_id)
+      REFERENCES "DEPENDENT" (dependent_name, "dependent_SSN");
+
+ALTER TABLE "PATIENT"
+  ADD CONSTRAINT "PATIENT_EMPLOYEE_ssn_fkey"
+    FOREIGN KEY ("EMPLOYEE_ssn") REFERENCES "EMPLOYEE" (ssn);
+
+ALTER TABLE "PATIENT"
+  ADD CONSTRAINT "PATIENT_project_number_fkey"
+    FOREIGN KEY (project_number) REFERENCES "PROJECT" (pnumber);
+
+ALTER TABLE "FINANCE"
+  ADD CONSTRAINT "FINANCE_EMPLOYEE_ssn_fkey"
+    FOREIGN KEY ("EMPLOYEE_ssn") REFERENCES "EMPLOYEE" (ssn);
+
+ALTER TABLE "FINANCE"
+  ADD CONSTRAINT "FINANCE_PROJECT_pnumber_fkey"
+    FOREIGN KEY ("PROJECT_pnumber") REFERENCES "PROJECT" (pnumber);
+
+ALTER TABLE "FINANCE"
+  ADD CONSTRAINT "FINANCE_PATIENT_patient_id_fkey"
+    FOREIGN KEY ("PATIENT_patient_id") REFERENCES "PATIENT" (patient_id);
+
+ALTER TABLE "FINANCE"
+  ADD CONSTRAINT "FINANCE_MEMBERSHIP_membership_id_fkey"
+    FOREIGN KEY ("MEMBERSHIP_membership_id") REFERENCES "MEMBERSHIP" (membership_id)
+  ;
+
+ALTER TABLE "MEMBERSHIP"
+  ADD CONSTRAINT "MEMBERSHIP_PATIENT_patient_id_fkey"
+    FOREIGN KEY ("PATIENT_patient_id") REFERENCES "PATIENT" (patient_id);
