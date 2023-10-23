@@ -11,7 +11,7 @@ INCHEON Transport System🚉
 * [Insertion of sample data](https://github.com/chaw-thiri/DatabaseCourse/blob/main/its_data_insertion.ipynb)
   
 Hospital database🏥
-* [ ER diagram on Luna modeller](https://github.com/chaw-thiri/DatabaseCourse/blob/main/its_ER_Digram.dmm)      
+* [ ER diagram on Luna modeller](https://github.com/chaw-thiri/DatabaseCourse/blob/main/hospital_database_ERDiagram.dmm)      
 * [Execution of database using SQLite3](https://github.com/chaw-thiri/DatabaseCourse/blob/main/hospital_database_jupyter_notebook.ipynb)    
 * [ ER diagram in PostgradSQL script](https://github.com/chaw-thiri/DatabaseCourse/blob/main/hospital_database_postgradSQL)  
 * [ the TABLE](https://github.com/chaw-thiri/DatabaseCourse/blob/main/hospital_database_sqlite3.db)
