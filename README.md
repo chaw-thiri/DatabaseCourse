@@ -16,3 +16,7 @@ Hospital database🏥
 * [ ER diagram in PostgradSQL script](https://github.com/chaw-thiri/DatabaseCourse/blob/main/hospital_database_postgradSQL)  
 * [ the TABLE](https://github.com/chaw-thiri/DatabaseCourse/blob/main/hospital_database_sqlite3.db)
 * [ Summary](https://github.com/chaw-thiri/DatabaseCourse/blob/main/hospital_database_table_summary.pdf)
+
+
+## Lab session           
+* [Week 13](https://github.com/chaw-thiri/DatabaseCourse/blob/main/DB_week_13_lab.ipynb)
