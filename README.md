@@ -18,5 +18,8 @@ Hospital database🏥
 * [ Summary](https://github.com/chaw-thiri/DatabaseCourse/blob/main/hospital_database_table_summary.pdf)
 
 
-## Lab session           
-* [Week 13](https://github.com/chaw-thiri/DatabaseCourse/blob/main/DB_week_13_lab.ipynb)
+## Lab session     
+* [Week 10: Intermediate SQL](https://github.com/chaw-thiri/DatabaseCourse/blob/main/db_w10_intermediate_SQL.ipynb)
+* [Week 11: Advanced SQL](https://github.com/chaw-thiri/DatabaseCourse/blob/main/week11_DB_HW.ipynb)
+* [Week 12: time series lab](https://github.com/chaw-thiri/DatabaseCourse/blob/main/w12_timeseries_lab_SQL.ipynb)       
+* [Week 13: PRAMA, cache, query optimization](https://github.com/chaw-thiri/DatabaseCourse/blob/main/DB_week_13_lab.ipynb)
